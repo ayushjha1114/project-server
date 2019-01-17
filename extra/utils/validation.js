@@ -31,13 +31,7 @@ let valid = 0, invalid = 0;
 function validateUsers(us) {
     us.forEach( function(ua) {
         const { traineeEmail, reviewerEmail} = ua  //destruct array object
-        if(validateEmail(traineeEmail)) {
-            valid += 1;
-        }
-        else {
-            invalid += 1;
-        } 
-        if(validateEmail(reviewerEmail)) {
+        if(validateEmail(traineeEmail) && validateEmail(reviewerEmail) ) {
             valid += 1;
         }
         else {
