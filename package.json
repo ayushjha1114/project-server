@@ -6,14 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "valid": "nodemon extra/utils/validation.js",
-    "permission": "nodemon extra/utils/permission.js"
+    "permission": "nodemon extra/utils/permission.js",
+    "patternDiamond": "nodemon extra/patterns/diamond.js",
+    "patternEquilateral": "nodemon extra/patterns/equilateral.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ayushj117/express-server.git"
   },
   "author": "Ayush Jha",
-  "license": "ISC",
+
   "bugs": {
     "url": "https://github.com/ayushj117/express-server/issues"
   },
