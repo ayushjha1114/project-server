@@ -16,9 +16,9 @@ const users = [
         reviewerEmail: 'reviewer3@successive.tech',
     }
 ]
-function validateEmail(xp) {
+function validateEmail(mail) {
     let re = /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(successive)\.tech$/
-    if(re.test(xp)) {
+    if(re.test(mail)) {
         return true;
     }
     else {
@@ -28,9 +28,9 @@ function validateEmail(xp) {
 
 
 let valid = 0, invalid = 0;
-function validateUsers(us) {
-    us.forEach( function(ua) {
-        const { traineeEmail, reviewerEmail} = ua  //destruct array object
+function validateUsers(user) {
+    user.forEach( function(input) {
+        const { traineeEmail, reviewerEmail} = input  //destruct array object
         if(validateEmail(traineeEmail) && validateEmail(reviewerEmail) ) {
             valid += 1;
         }
