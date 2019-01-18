@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "valid": "nodemon extra/utils/validation.js",
-    "permission": "nodemon extra/utils/permission.js",
-    "patternDiamond": "nodemon extra/patterns/diamond.js",
-    "patternEquilateral": "nodemon extra/patterns/equilateral.js"
+    "valid": "node extra/utils/validation.js",
+    "permission": "node extra/utils/permissions.js",
+    "patternDiamond": "node extra/patterns/diamond.js",
+    "patternEquilateral": "node extra/patterns/equilateral.js"
   },
   "repository": {
     "type": "git",
