@@ -1,0 +1,21 @@
+{
+  "name": "express-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "patternDiamond": "nodemon extra/patterns/diamond.js",
+    "patternEquilateral": "nodemon extra/patterns/equilateral.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushj117/express-server.git"
+  },
+  "author": "Ayush Jha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushj117/express-server/issues"
+  },
+  "homepage": "https://github.com/ayushj117/express-server#readme"
+}
