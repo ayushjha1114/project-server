@@ -1,23 +1,22 @@
 {
-  "name": "express-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "valid": "node extra/utils/validation.js",
-    "permission": "node extra/utils/permissions.js",
-    "patternDiamond": "node extra/patterns/diamond.js",
-    "patternEquilateral": "node extra/patterns/equilateral.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ayushj117/express-server.git"
-  },
-  "author": "Ayush Jha",
-  "bugs": {
-    "url": "https://github.com/ayushj117/express-server/issues"
-  },
-  "homepage": "https://github.com/ayushj117/express-server#readme",
-
+    "name": "express-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "babel-node extra --presets env"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ayushj117/express-server.git"
+    },
+    "author": "Ayush Jha",
+    "bugs": {
+        "url": "https://github.com/ayushj117/express-server/issues"
+    },
+    "homepage": "https://github.com/ayushj117/express-server#readme",
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0"
+    }
 }
