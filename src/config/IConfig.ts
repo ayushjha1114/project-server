@@ -1,5 +1,5 @@
 export interface IConfig {
-    port: string
+    port: string;
 }
 // export interface IConfig {
 //     portType: string
