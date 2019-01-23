@@ -1,17 +1,16 @@
-import { IUsers } from './interfaces';
+import { IUsers } from "./interfaces";
 import { diamond, equilateral } from "./patterns";
 import { hasPermission, validateUsers } from "./utils";
 
-
 hasPermission("GetUsers1234", "trainer", "write");
-hasPermission( 'user1','trainer', 'read');
-hasPermission( 'user1','head-trainer', 'delete');
-hasPermission( 'ask123','trainer', 'delete');
+hasPermission("user1", "trainer", "read");
+hasPermission("user1", "head-trainer", "delete");
+hasPermission("ask123", "trainer", "delete");
 
 diamond(5);
-console.log('-------------------------------------');
+console.log("-------------------------------------");
 equilateral(10);
-console.log('-------------------------------------');
+console.log("-------------------------------------");
 export const users: IUsers[] = [
     {
         traineeEmail: "trainee1@successive.tech",
