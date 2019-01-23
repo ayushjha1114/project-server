@@ -1,4 +1,4 @@
-import { IUsers } from './../interfaces';
+import { IUsers } from "./../interfaces";
 // import { users } from '../constants';
 import validateEmail from "./helpers";
 
