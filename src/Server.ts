@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { notFoundRoute, errorHandler } from "./libs/routes";
+import router from "./router";
 
 //console.log(bodyParser);
 class Server {
@@ -25,7 +26,7 @@ class Server {
             res.send("hi welcome");
         });
         //app.get("/favicon.ico", (req, res) => res.status(204));
-
+        app.use("/api", router);
         app.use(notFoundRoute);
         app.use(errorHandler);
     }
