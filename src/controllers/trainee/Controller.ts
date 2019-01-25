@@ -14,7 +14,7 @@ class ControllerTrainee {
         console.log("trainee");
         res.status(200).send(successHandler("It's get request", data, 200));
     }
-    post(req: Request, res: Response, next) {
+    create(req: Request, res: Response, next) {
         console.log("trainee");
         const { name, id } = req.body;
         console.log("request body", req.body);
@@ -25,25 +25,25 @@ class ControllerTrainee {
                 id: id
             }
         ];
-        if (!name) {
-            return next({
-                error: "Not Found",
-                message: "Name is not found",
-                status: 404
-            });
-        }
-        if (!id) {
-            return next({
-                error: "Not Found",
-                message: "Id is not found",
-                status: 404
-            });
-        } else
+        // if (!name) {
+        //     return next({
+        //         error: "Not Found",
+        //         message: "Name is not found",
+        //         status: 404
+        //     });
+        // }
+        // if (!id) {
+        //     return next({
+        //         error: "Not Found",
+        //         message: "Id is not found",
+        //         status: 404
+        //     });
+        // } else
             res.status(201).send(
                 successHandler("It's post request", data, 201)
             );
     }
-    put(req: Request, res: Response, next) {
+    modify(req: Request, res: Response, next) {
         console.log("trainee");
         const data = [
             {
@@ -58,7 +58,9 @@ class ControllerTrainee {
         );
     }
     delete(req: Request, res: Response, next) {
-        res.status(204).send(successHandler("Data is deleted", null, 204));
+        const { id } = req.params;
+        console.log("in controller delete")
+        res.status(202).send(successHandler("Data is deleted", id, 202));
     }
 }
 export default new ControllerTrainee();
