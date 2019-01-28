@@ -39,18 +39,15 @@ class ControllerTrainee {
         //         status: 404
         //     });
         // } else
-            res.status(201).send(
-                successHandler("It's post request", data, 201)
-            );
+        res.status(201).send(successHandler("It's post request", data, 201));
     }
     modify(req: Request, res: Response, next) {
         console.log("trainee");
+        const { dataToUpdate, id } = req.body;
         const data = [
             {
-                name: "trainee1"
-            },
-            {
-                name: "trainee2"
+                updatedData: dataToUpdate,
+                id: id
             }
         ];
         res.status(200).send(
@@ -59,7 +56,7 @@ class ControllerTrainee {
     }
     delete(req: Request, res: Response, next) {
         const { id } = req.params;
-        console.log("in controller delete")
+        console.log("in controller delete");
         res.status(202).send(successHandler("Data is deleted", id, 202));
     }
 }

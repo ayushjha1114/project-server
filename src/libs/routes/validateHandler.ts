@@ -1,54 +1,83 @@
 import successHandler from "./successHandler";
 export default objData => (req, res, next) => {
     console.log("validate handler", req.body, req.params, req.query);
-
-    if (objData.id.in == "body") {
-        if (typeof(req.body.id)=='string'&& typeof(req.body.name)=='string') {
-            if (objData.id.required && objData.name.required) {
-                if (objData.id.string && objData.name.string) {
-                    next();
-                }
-            }
-        } else if (typeof(req.body.id)!='string') {
-            return next({
-                error: "Not Found",
-                message: objData.id.errorMessage,
-                status: 404
+    const keys = Object.keys(objData);
+    // console.log(Object.keys(objData));
+    keys.forEach(key => {
+        const item = objData[key];
+        // console.log("asdasdasdadnawidjnawdn", item);
+        const value = item.in.map(items => {
+            // console.log("asdasfd", req[items][key]);
+            return req[items][key];
+        });
+        if (item && item.required) {
+            //It's used to check field is required or not
+            const validatedValue = value.filter(function(item) {
+                console.log("inside filter item", item);
+                return item;
             });
-        } else if (typeof(req.body.name)!='string') {
-            return next({
-                error: "Not Found",
-                message: objData.name.errorMessage,
-                status: 404
-            });
-        }
-    } else if (objData.id.in == "params") {
-        if (typeof(req.params.id)=='string') {
-            if (objData.id.required) {
-                if (objData.id.string) {
-                    console.log("step 1")
-                    next();
-                }
-            }
-        } else if (typeof(req.params.id) != 'string') {
-            return next({
-                error: "Not Found",
-                message: objData.id.errorMessage,
-                status: 404
-            });
-        }
-    } else if (objData.skip.in == "query") {
-        if ((req.query)== { }) {
-            if (!objData.id.required) {
-                if (objData.id.string) {
-                    console.log("step 1")
-                    next();
-                }
+            // console.log("wereser", validatedValue);
+            if (validatedValue.length !== value.length) {
+                next({
+                    error: "Not Found",
+                    message: objData[key].errorMessage || `${key} is required`,
+                    status: 400
+                });
             }
         }
-    }
-
-    // next();
+        if (item.string) {
+            // It's check the type of key-value pair is string or not
+            const validatedValue = value.filter(item => item);
+            validatedValue.forEach(element => {
+                if (typeof element !== "string") {
+                    next({
+                        error: "Not valid",
+                        message: `${key} is not string`,
+                        status: 404
+                    });
+                }
+            });
+        }
+        if (item.number) {
+            const validatedValue = value.filter(item => item);
+            validatedValue.forEach(element => {
+                if (typeof element !== "number") {
+                    next({
+                        error: "Not valid",
+                        message: `${key} is not number`,
+                        status: 404
+                    });
+                }
+            });
+        }
+        if (item.regex) {
+            //It's check the regular expression of key-value pairs
+            const validatedValue = value.filter(item => item);
+            if (!item.regex.test(validatedValue)) {
+                next({
+                    error: "Not valid",
+                    message: `${key} is not in format`,
+                    status: 404
+                });
+            }
+        }
+        if (item.isObject) {
+            const validatedValue = value.filter(item => item);
+            validatedValue.forEach(element => {
+                if (typeof element !== "object") {
+                    next({
+                        error: "Not valid",
+                        message: `${key} is not object`,
+                        status: 404
+                    });
+                }
+            });
+        }
+        if (item.custom) {
+            item.custom(3);
+        }
+    });
+    next();
 };
 
 // export default function(objData) {

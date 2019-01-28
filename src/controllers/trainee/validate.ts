@@ -3,24 +3,25 @@ const validateConfig = {
         id: {
             required: true,
             string: true,
+            regex: /^[0-9]*$/,
             in: ["body"],
             errorMessage: "Id is required",
             custom: function(value) {
                 console.log("Value", value);
-                throw { error: "Error Occured", message: "Message" };
+                //throw { error: "Error Occurred", message: "Message", status: 400 };
             }
         },
         name: {
             required: true,
             string: true,
-            regex: "",
+            regex: /^[a-zA-Z0-9]*$/,
             in: ["body"],
             errorMessage: "Name is required"
         }
     },
     delete: {
         id: {
-            required: true,
+            required: false,
             string: true,
             errorMessage: "Id is required",
             in: ["params"]
