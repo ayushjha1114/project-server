@@ -11,7 +11,7 @@ export default objData => (req, res, next) => {
             return req[items][key];
         });
         const validatedValue = value.filter(item => item);
-        console.log(" line 14",validatedValue[0]);
+        //console.log(" line 14",validatedValue[0]);
         if (item && item.required) {
             //It's used to check field is required or not
             if (validatedValue.length !== value.length) {

@@ -38,14 +38,14 @@ const validateConfig = {
         skip: {
             required: false,
             default: 0,
-            number: true,
+            //number: true,
             in: ["query"],
             errorMessage: "Skip is invalid"
         },
         limit: {
             required: false,
             default: 10,
-            number: true,
+            //number: true,
             in: ["query"],
             errorMessage: "Limit is invalid"
         }

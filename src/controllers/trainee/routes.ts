@@ -1,10 +1,11 @@
 import * as express from "express";
 import ControllerTrainee from "./Controller";
 import { validateHandler } from "../../libs/routes";
+import {authMiddleware} from "../../libs/routes";
 import validConfigData from "./validate";
 const traineeRouter = express.Router();
 traineeRouter
-    .get("/", validateHandler(validConfigData.get), ControllerTrainee.get)
+    .get("/", authMiddleware('user1', 'read'), ControllerTrainee.get)
     .post("/", validateHandler(validConfigData.create), ControllerTrainee.create)
     .put("/", validateHandler(validConfigData.update), ControllerTrainee.modify)
     .delete("/:id", validateHandler(validConfigData.delete), ControllerTrainee.delete);
