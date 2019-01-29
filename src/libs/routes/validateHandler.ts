@@ -5,18 +5,15 @@ export default objData => (req, res, next) => {
     // console.log(Object.keys(objData));
     keys.forEach(key => {
         const item = objData[key];
-        // console.log("asdasdasdadnawidjnawdn", item);
+        console.log("asdasdasdtrue adnawidjnawdn", item);
         const value = item.in.map(items => {
             // console.log("asdasfd", req[items][key]);
             return req[items][key];
         });
+        const validatedValue = value.filter(item => item);
+        console.log(" line 14",validatedValue[0]);
         if (item && item.required) {
             //It's used to check field is required or not
-            const validatedValue = value.filter(function(item) {
-                console.log("inside filter item", item);
-                return item;
-            });
-            // console.log("wereser", validatedValue);
             if (validatedValue.length !== value.length) {
                 next({
                     error: "Not Found",
@@ -27,33 +24,26 @@ export default objData => (req, res, next) => {
         }
         if (item.string) {
             // It's check the type of key-value pair is string or not
-            const validatedValue = value.filter(item => item);
-            validatedValue.forEach(element => {
-                if (typeof element !== "string") {
-                    next({
-                        error: "Not valid",
-                        message: `${key} is not string`,
-                        status: 404
-                    });
-                }
-            });
+            if (typeof validatedValue[0] !== "string") {
+                next({
+                    error: "Not valid",
+                    message: `${key} is not string`,
+                    status: 404
+                });
+            }
         }
         if (item.number) {
-            const validatedValue = value.filter(item => item);
-            validatedValue.forEach(element => {
-                if (typeof element !== "number") {
-                    next({
-                        error: "Not valid",
-                        message: `${key} is not number`,
-                        status: 404
-                    });
-                }
-            });
+            if (typeof validatedValue[0] !== "number") {
+                next({
+                    error: "Not valid",
+                    message: `${key} is not number`,
+                    status: 404
+                });
+            }
         }
         if (item.regex) {
             //It's check the regular expression of key-value pairs
-            const validatedValue = value.filter(item => item);
-            if (!item.regex.test(validatedValue)) {
+            if (!item.regex.test(validatedValue[0])) {
                 next({
                     error: "Not valid",
                     message: `${key} is not in format`,
@@ -62,19 +52,18 @@ export default objData => (req, res, next) => {
             }
         }
         if (item.isObject) {
-            const validatedValue = value.filter(item => item);
-            validatedValue.forEach(element => {
-                if (typeof element !== "object") {
-                    next({
-                        error: "Not valid",
-                        message: `${key} is not object`,
-                        status: 404
-                    });
-                }
-            });
+            if (typeof validatedValue[0] !== "object") {
+                next({
+                    error: "Not valid",
+                    message: `${key} is not object`,
+                    status: 404
+                });
+            }
         }
         if (item.custom) {
-            item.custom(3);
+            if (req.body.name) {
+                item.custom(validatedValue[0]);
+            }
         }
     });
     next();

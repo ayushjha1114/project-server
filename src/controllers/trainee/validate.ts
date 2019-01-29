@@ -1,7 +1,7 @@
 const validateConfig = {
     create: {
         id: {
-            required: true,
+            required: false,
             string: true,
             regex: /^[0-9]*$/,
             in: ["body"],
@@ -16,7 +16,14 @@ const validateConfig = {
             string: true,
             regex: /^[a-zA-Z0-9]*$/,
             in: ["body"],
-            errorMessage: "Name is required"
+            errorMessage: "Name is required",
+            custom: function( value) {
+                if(Array.isArray(value)) {
+                    console.log("Great!!! It is an array")
+                }
+                console.log("Value");
+                //throw { error: "Error Occurred", message: "Message", status: 400 };
+            }
         }
     },
     delete: {
