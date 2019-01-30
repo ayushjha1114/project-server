@@ -5,11 +5,7 @@ const validateConfig = {
             string: true,
             regex: /^[0-9]*$/,
             in: ["body"],
-            errorMessage: "Id is required",
-            custom: function(value) {
-                // console.log("Value", value);
-                //throw { error: "Error Occurred", message: "Message", status: 400 };
-            }
+            errorMessage: "Id is required"
         },
         name: {
             required: true,

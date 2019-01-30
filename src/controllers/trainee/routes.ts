@@ -5,7 +5,7 @@ import {authMiddleware} from "../../libs/routes";
 import validConfigData from "./validate";
 const traineeRouter = express.Router();
 traineeRouter
-    .get("/", authMiddleware('user1', 'read'), ControllerTrainee.get)
+    .get("/", validateHandler(validConfigData.create), authMiddleware('user1', 'read'), ControllerTrainee.get)
     .post("/", validateHandler(validConfigData.create), ControllerTrainee.create)
     .put("/", validateHandler(validConfigData.update), ControllerTrainee.modify)
     .delete("/:id", validateHandler(validConfigData.delete), ControllerTrainee.delete);
