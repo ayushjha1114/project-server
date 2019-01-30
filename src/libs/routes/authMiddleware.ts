@@ -1,13 +1,16 @@
 //import { config } from "dotenv";
 import * as jwt from "jsonwebtoken";
 import hasPermission from "./hasPermissions";
+import config from "../../config/configuration";
+
 export default function authMiddleware(module, permissionType) {
     return (req, res, next) => {
         const token = req.headers["authorization"];
+        const { key } = config
         let decoded;
         console.log(token);
         try {
-            decoded = jwt.verify(token, process.env.KEY);
+            decoded = jwt.verify(token, key);
         } catch (error) {
             return next({
                 error: error.message,
