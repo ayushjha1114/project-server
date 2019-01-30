@@ -5,13 +5,17 @@ class Database {
             mongoose.connect(mongoUrl, { useNewUrlParser: true })
             .then((value) => {
                 resolve("connected to db");
-                // const Cat = mongoose.model('Cat', { name: String });
-                // const kitty = new Cat({ name: 'sweety' });
-                // kitty.save().then(() => console.log('meow'));
+
             })
             .catch((err) => {
                 reject("not connected");
             })
+            const schema = new mongoose.Schema({
+                name: String
+            });
+               const Dog = mongoose.model('Dog', schema);
+                const puppy = new Dog({ name: 'bob' });
+                puppy.save().then(() => console.log('meow'));
         })
         // mongoose.connect(mongoUrl, { useNewUrlParser: true }).then(() => {
         //     console.log("connected to db");
