@@ -4,15 +4,19 @@ import hasPermission from "./hasPermissions";
 export default function authMiddleware(module, permissionType) {
     return (req, res, next) => {
         const token = req.headers["authorization"];
+        let decoded;
         console.log(token);
-        const decoded = jwt.verify(token, process.env.KEY, (err, res) => {
-            if(err) {
-                return false;
-            }
-            return res;
-        });
-      // const decoded = jwt.decode(token);
-        console.log('DECODE:::::', decoded);
+        try {
+            decoded = jwt.verify(token, process.env.KEY);
+        } catch (error) {
+            return next({
+                error: error.message,
+                message: error.message,
+                status: 500
+            });
+        }
+        // const decoded = jwt.decode(token);
+        console.log("DECODE:::::", decoded);
         if (!decoded) {
             next({
                 error: "Unauthorized access",
