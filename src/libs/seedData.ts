@@ -1,14 +1,17 @@
-import { UserRepository } from "./../repositories/user/UserRepository";
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
+import { UserRepository } from './../repositories/user/UserRepository';
 
 // We use this seed file to create a super user at bootstrapping time of app.
 
 export const seedInitial = () => {
-    const UserRepo = new UserRepository();
-    UserRepo.userCreate({
-        name: "ayush"
+    const userRepository = new UserRepository();
+    userRepository.userCreate({
+        name: 'AYush',
     });
-    UserRepo.userDelete({
-        id: "1756334"
-    });
+    // userRepository.userDelete({
+    //     name: 'ayush',
+    // });
+    // userRepository.userUpdate({
+    //     name: 'afsdfsdg',
+    // });
 };

@@ -1,7 +1,7 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
 export interface IUserModel extends mongoose.Document {
-    id: string;
+    // id: string;
     name: string;
 }
 // "husky": {
