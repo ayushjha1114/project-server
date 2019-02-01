@@ -1,29 +1,29 @@
-import { Request, Response } from "express";
-import { successHandler } from "../../libs/routes";
+import { Request, Response } from 'express';
+import { successHandler } from '../../libs/routes';
 class ControllerTrainee {
-    //private constructor(){};
-    get(req: Request, res: Response) {
+    // private constructor(){};
+    public get(req: Request, res: Response) {
         const data = [
             {
-                name: "trainee1"
+                name: 'trainee1',
             },
             {
-                name: "trainee2"
-            }
+                name: 'trainee2',
+            },
         ];
-        console.log("trainee");
+        console.log('trainee');
         res.status(200).send(successHandler("It's get request", data, 200));
     }
-    create(req: Request, res: Response, next) {
-        console.log("trainee");
+    public create(req: Request, res: Response, next) {
+        console.log('trainee');
         const { name, id } = req.body;
-        console.log("request body", req.body);
+        console.log('request body', req.body);
         console.log(name, id);
         const data = [
             {
-                name: name,
-                id: id
-            }
+                id,
+                name,
+            },
         ];
         // if (!name) {
         //     return next({
@@ -41,23 +41,23 @@ class ControllerTrainee {
         // } else
         res.status(201).send(successHandler("It's post request", data, 201));
     }
-    modify(req: Request, res: Response, next) {
-        console.log("trainee");
+    public modify(req: Request, res: Response, next) {
+        console.log('trainee');
         const { dataToUpdate, id } = req.body;
         const data = [
             {
+                id,
                 updatedData: dataToUpdate,
-                id: id
-            }
+            },
         ];
         res.status(200).send(
-            successHandler("Given data is updated", data, 200)
+            successHandler('Given data is updated', data, 200),
         );
     }
-    delete(req: Request, res: Response, next) {
+    public delete(req: Request, res: Response, next) {
         const { id } = req.params;
-        console.log("in controller delete");
-        res.status(202).send(successHandler("Data is deleted", id, 202));
+        console.log('in controller delete');
+        res.status(202).send(successHandler('Data is deleted', id, 202));
     }
 }
 export default new ControllerTrainee();

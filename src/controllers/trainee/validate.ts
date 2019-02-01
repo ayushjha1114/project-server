@@ -1,23 +1,23 @@
 const validateConfig = {
     create: {
         id: {
+            errorMessage: 'Id is required',
+            in: ['body'],
+            regex: /^[0-9]*$/,
             required: true,
             string: true,
-            regex: /^[0-9]*$/,
-            in: ["body"],
-            errorMessage: "Id is required"
         },
         name: {
+            errorMessage: 'Name is required',
+            in: ['body'],
+            regex: /^[a-zA-Z0-9]*$/,
             required: true,
             string: true,
-            regex: /^[a-zA-Z0-9]*$/,
-            in: ["body"],
-            errorMessage: "Name is required",
-            custom: function(value, next) {
+            custom(value, next) {
                 if (Array.isArray(value)) {
-                    console.log("Great!!! It is an array");
+                    console.log('Great!!! It is an array');
                 }
-                console.log("Array value", value);
+                console.log('Array value', value);
                 // value.forEach(element => {
                 //     if (!this.regex.test(element)) {
                 //         return next({
@@ -29,47 +29,47 @@ const validateConfig = {
                 // });
 
                 // this.regex;
-            }
-        }
+            },
+        },
     },
     delete: {
         id: {
+            errorMessage: 'Id is required',
+            in: ['params'],
             required: false,
             string: true,
-            errorMessage: "Id is required",
-            in: ["params"]
-        }
+        },
     },
     get: {
-        skip: {
-            required: false,
-            default: 0,
-            //number: true,
-            in: ["query"],
-            errorMessage: "Skip is invalid"
-        },
         limit: {
-            required: false,
             default: 10,
-            //number: true,
-            in: ["query"],
-            errorMessage: "Limit is invalid"
-        }
+            errorMessage: 'Limit is invalid',
+            in: ['query'],
+            required: false,
+            // number: true,
+        },
+        skip: {
+            default: 0,
+            errorMessage: 'Skip is invalid',
+            in: ['query'],
+            required: false,
+            // number: true,
+        },
     },
     update: {
+        dataToUpdate: {
+            in: ['body'],
+            isObject: true,
+            required: true,
+            custom(dataToUpdate) { return true; },
+        },
         id: {
+            errorMessage: 'Id is required',
+            in: ['body'],
             required: true,
             string: true,
-            errorMessage: "Id is required",
-            in: ["body"]
         },
-        dataToUpdate: {
-            in: ["body"],
-            required: true,
-            isObject: true,
-            custom: function(dataToUpdate) {}
-        }
-    }
+    },
 };
 
 export default validateConfig;

@@ -1,25 +1,25 @@
-import { seedInitial } from "./seedData";
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
+import { seedInitial } from './seedData';
 class Database {
-    open(mongoUrl) {
+
+    public static disconnect() {
+        mongoose.connection.close();
+    }
+    public open(mongoUrl) {
         return new Promise((resolve, reject) => {
             mongoose
                 .connect(
                     mongoUrl,
-                    { useNewUrlParser: true }
+                    { useNewUrlParser: true },
                 )
-                .then(value => {
+                .then((value) => {
                     seedInitial();
-                    resolve("connected to db");
+                    resolve('connected to db');
                 })
-                .catch(err => {
-                    reject("not connected");
+                .catch((err) => {
+                    reject('not connected');
                 });
         });
-    }
-
-    static disconnect() {
-        mongoose.connection.close();
     }
 }
 

@@ -1,5 +1,5 @@
-import Server from "./Server";
-import config from "./config/configuration";
+import config from './config/configuration';
+import Server from './Server';
 
 const server = new Server(config);
 server.bootstrap().run();

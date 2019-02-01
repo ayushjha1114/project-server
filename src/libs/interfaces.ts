@@ -1,4 +1,4 @@
-//import { GetUsers  } from './constants';
+// import { GetUsers  } from './constants';
 
 export interface IPermission {
     [user: string]: {
@@ -9,4 +9,3 @@ export interface IPermission {
         delete: string[];
     };
 }
-
