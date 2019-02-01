@@ -1,33 +1,36 @@
 import { Request, Response } from 'express';
 import { successHandler } from '../../libs/routes';
-import { UserRepository } from './../../repositories/user/UserRepository';
+import UserRepository from './../../repositories/user/UserRepository';
 class ControllerTrainee {
     // private constructor(){};
-  public UserRepo = new UserRepository();
     public get(req: Request, res: Response) {
+        const { name, role, email } = req.body.data;
+        console.log('asfdsgdfhgfjdsfgdsfhsfh', name, role, email);
         const data = [
             {
-                name: 'trainee1',
+                Email: email,
+                Name: name,
+                Role: role,
             },
-            {
-                name: 'trainee2',
-            },
+
         ];
-        console.log('trainee');
+        console.log('user');
         res.status(200).send(successHandler("It's get request", data, 200));
     }
     public create(req: Request, res: Response, next) {
         console.log('trainee');
-        const { name } = req.body;
+        const { name, role, email } = req.body.data;
         console.log('request body', req.body);
-        console.log(name);
+        console.log('asfdsgdfhgfjdsfgdsfhsfh', name, role, email);
         const data = [
             {
                 name,
             },
         ];
-        this.UserRepo.userCreate(req.body);
-        res.status(201).send(successHandler("It's post request", data, 201));
+        UserRepository.userCreate(req.body)
+            .then(() => {
+                res.status(201).send(successHandler("It's post request", data, 201));
+            });
     }
     public modify(req: Request, res: Response, next) {
         console.log('trainee');
@@ -44,7 +47,10 @@ class ControllerTrainee {
     public delete(req: Request, res: Response, next) {
         const { id } = req.params;
         console.log('in controller delete');
-        res.status(202).send(successHandler('Data is deleted', id, 202));
+        UserRepository.userDelete(req.params)
+            .then(() => {
+            res.status(202).send(successHandler('Data is deleted', id, 202));
+            })
     }
 }
 export default new ControllerTrainee();

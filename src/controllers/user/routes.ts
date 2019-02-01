@@ -6,10 +6,10 @@ import validConfigData from './validate';
 const userRouter = express.Router();
 
 userRouter
-    .get('/', authMiddleware('user1', 'read'), validateHandler(validConfigData.create), ControllerTrainee.get)
-    .post('/', authMiddleware('user1', 'read'), validateHandler(validConfigData.create), ControllerTrainee.create)
-    .put('/', authMiddleware('user1', 'read'), validateHandler(validConfigData.update), ControllerTrainee.modify)
-    .delete('/:id', authMiddleware('user1', 'read'), validateHandler(validConfigData.delete), ControllerTrainee.delete);
+    .get('/', authMiddleware('user', 'read'), validateHandler(validConfigData.get), ControllerTrainee.get)
+    .post('/', authMiddleware('user', 'read'), validateHandler(validConfigData.create), ControllerTrainee.create)
+    .put('/', authMiddleware('user', 'read'), validateHandler(validConfigData.update), ControllerTrainee.modify)
+    .delete('/:id', authMiddleware('user', 'read'), validateHandler(validConfigData.delete), ControllerTrainee.delete);
 
     // userRouter.get('/dsj', (req, res) => {
 //     console.log("trainee");

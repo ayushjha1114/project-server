@@ -1,8 +1,7 @@
 import * as mongoose from 'mongoose';
 import { IUserModel } from './IUserModel';
 import { userModel } from './UserModel';
-
-export class UserRepository {
+class UserRepository {
     public static generate() {
         return String(mongoose.Types.ObjectId());
     }
@@ -13,6 +12,9 @@ export class UserRepository {
         this.model = userModel;
     }
 
+    public userCount() {
+        return this.model.countDocuments();
+    }
     public userCreate(data): Promise<IUserModel> {
         return this.model.create({...data, _id: UserRepository.generate()});
     }
@@ -31,6 +33,12 @@ export class UserRepository {
         });
     }
     public userFind(data) {
-        return this.model.findOne(data );
+        return this.model.findOne(data, (err) => {
+            if (err) {
+                return err;
+            }
+        } );
     }
 }
+
+export default new UserRepository();

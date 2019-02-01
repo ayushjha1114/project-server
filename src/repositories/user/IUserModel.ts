@@ -2,7 +2,9 @@ import * as mongoose from 'mongoose';
 
 export interface IUserModel extends mongoose.Document {
     // id: string;
+    email: string;
     name: string;
+    role: string;
 }
 // "husky": {
 //     "hooks": {

@@ -1,6 +1,7 @@
 // import { config } from "dotenv";
 import * as jwt from 'jsonwebtoken';
 import config from '../../config/configuration';
+import UserRepository from '../../repositories/user/UserRepository';
 import hasPermission from './hasPermissions';
 
 export default function authMiddleware(module, permissionType) {
@@ -18,24 +19,27 @@ export default function authMiddleware(module, permissionType) {
                 status: 500,
             });
         }
-        // const decoded = jwt.decode(token);
+        req.body.data = decoded;
+        const { role , email, name} = decoded;
         console.log('DECODE:::::', decoded);
-        if (!decoded) {
-            next({
-                error: 'Unauthorized access',
-                message: 'User is unauthorized',
-                status: 401,
-            });
-        }
-        const { role } = decoded;
-        const result = hasPermission(module, role, permissionType);
-        if (result === false) {
-            next({
-                error: 'Unauthorized',
-                message: 'permission denied',
-                status: 401,
-            });
-        }
+        // console.log('data:::::', role, name, email);
+        UserRepository.userFind(decoded).then(() => {
+            if (!decoded) {
+                next({
+                    error: 'Unauthorized access',
+                    message: 'User is unauthorized',
+                    status: 401,
+                });
+            }
+            const result = hasPermission(module, role, permissionType);
+            if (result === false) {
+                next({
+                    error: 'Unauthorized',
+                    message: 'permission denied',
+                    status: 401,
+                });
+            }
+        });
         next();
     };
 }

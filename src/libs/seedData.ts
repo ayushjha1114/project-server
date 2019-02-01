@@ -1,17 +1,26 @@
-import * as mongoose from 'mongoose';
-import { UserRepository } from './../repositories/user/UserRepository';
-
+import UserSchema from '../repositories/user/UserSchema';
+import UserRepository from './../repositories/user/UserRepository';
 // We use this seed file to create a super user at bootstrapping time of app.
-
 export const seedInitial = () => {
-    const userRepository = new UserRepository();
-    userRepository.userCreate({
-        name: 'AYush',
+    UserRepository.userCount()
+        .then((result) => {
+            if ( result === 0 ) {
+                UserRepository.userCreate({
+                    email: 'head.trainer@successive.tech',
+                    name: 'Head-Trainer',
+                    role: 'head-trainer',
+                });
+                UserRepository.userCreate({
+                    email: 'trainee@successive.tech',
+                    name: 'Trainee',
+                    role: 'trainee',
+                });
+            }
     });
-    // userRepository.userDelete({
+    // UserRepository.userDelete({
     //     name: 'ayush',
     // });
-    // userRepository.userUpdate({
+    // UserRepository.userUpdate({
     //     name: 'afsdfsdg',
     // });
 };

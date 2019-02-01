@@ -19,7 +19,7 @@ const permissions: IPermission = {
         write: [trainer],
 
     },
-    user1: {
+    user: {
         all: [head],
         delete: [],
         read: [trainee, trainer],
