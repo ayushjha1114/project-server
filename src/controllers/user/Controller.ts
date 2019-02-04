@@ -4,56 +4,70 @@ import UserRepository from './../../repositories/user/UserRepository';
 class ControllerTrainee {
     // private constructor(){};
     public get(req: Request, res: Response) {
-        UserRepository.userFind({email: req.body}).then((fetched) => {
-        const { name, role, email, _id } = fetched;
-        console.log('123456789345678', name, role, email);
-        const data = {
-            Email: email,
-            ID: _id,
-            Name: name,
-            Role: role,
-        };
-
-        console.log('user');
-        res.status(200).send(successHandler("It's get request", data, 200));
-
-        });
-
+        try {
+            UserRepository.userFind({email: req.body}).then((fetched) => {
+                const { name, role, email, _id } = fetched;
+                console.log('123456789345678', name, role, email);
+                const data = {
+                    Email: email,
+                    ID: _id,
+                    Name: name,
+                    Role: role,
+                };
+                console.log('user');
+                res.status(200).send(successHandler("It's get request", data, 200));
+                });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
     }
     public create(req: Request, res: Response, next) {
-        console.log('trainee');
-        const { name, role, email } = req.body.data;
-        console.log('request body', req.body);
-        console.log('asfdsgdfhgfjdsfgdsfhsfh', name, role, email);
-        const data = [
-            {
-                name,
-            },
-        ];
-        UserRepository.userCreate(req.body)
+        try {
+            const { name, email } = req.body;
+            console.log('request body', req.body);
+            const data = {
+                Email: email,
+                Name: name,
+            };
+            UserRepository.userCreate(req.body)
             .then(() => {
                 res.status(201).send(successHandler("It's post request", data, 201));
             });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
     }
     public modify(req: Request, res: Response, next) {
-        console.log('trainee');
-        const { dataToUpdate} = req.body;
-        const data = [
-            {
+        try {
+            const { dataToUpdate } = req.body;
+            const data = {
                 updatedData: dataToUpdate,
-            },
-        ];
-        res.status(200).send(
-            successHandler('Given data is updated', data, 200),
-        );
+            };
+            UserRepository.userUpdate(dataToUpdate)
+            .then(() => {
+                res.status(201).send(successHandler('Given data is updated', data, 200));
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
     }
     public delete(req: Request, res: Response, next) {
-        const { id } = req.params;
-        console.log('in controller delete');
-        UserRepository.userDelete(req.params)
-            .then(() => {
-            res.status(202).send(successHandler('Data is deleted', id, 202));
-            });
+        try {
+            const { id } = req.params;
+            console.log('in controller delete');
+            UserRepository.userDelete(req.params)
+                .then(() => {
+                res.status(202).send(successHandler('Data is deleted', id, 202));
+                });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
     }
 }
 export default new ControllerTrainee();
