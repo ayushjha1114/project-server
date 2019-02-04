@@ -5,7 +5,7 @@ export default function hasPermission(
     permissionType: string,
 ): boolean {
    // console.log(Object.keys(permissions));
-    if (permissions.hasOwnProperty(moduleName)) {
+   if (permissions.hasOwnProperty(moduleName)) {
         // console.log('inside module')
         if (permissions[moduleName]['all' as string].includes(role)) {
             return true;

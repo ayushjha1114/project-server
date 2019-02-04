@@ -19,11 +19,10 @@ export default function authMiddleware(module, permissionType) {
                 status: 500,
             });
         }
-        req.body.data = decoded;
-        const { role , email, name} = decoded;
-        console.log('DECODE:::::', decoded);
-        // console.log('data:::::', role, name, email);
-        UserRepository.userFind(decoded).then(() => {
+        // req.body.data = decoded;
+        const { role } = decoded;
+        console.log('DECODE:::::', decoded.email);
+        UserRepository.userFind({email: decoded.email}).then((decodedUser) => {
             if (!decoded) {
                 next({
                     error: 'Unauthorized access',
@@ -39,7 +38,17 @@ export default function authMiddleware(module, permissionType) {
                     status: 401,
                 });
             }
+            else {
+                req.body = decodedUser.email;
+                console.log('1234567', req.body);
+                next();
+            }
+        })
+        .catch((err) => {
+            next({
+                error: err,
+            });
         });
-        next();
+
     };
 }
