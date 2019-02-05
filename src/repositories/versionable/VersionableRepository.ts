@@ -1,6 +1,4 @@
 import * as mongoose from 'mongoose';
-import { IUserModel } from '../user/IUserModel';
-import { userModel } from '../user/UserModel';
 
 class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
     public static generate() {
@@ -26,8 +24,8 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
             }
         });
     }
-    public genericUpdate(data): mongoose.Query<D> {
-        return this.model.updateOne(data, (err) => {
+    public genericUpdate(data, id): mongoose.Query<D> {
+        return this.model.updateOne({ _id: id }, { $set: data }, (err) => {
             if (err) {
                 return err;
             }

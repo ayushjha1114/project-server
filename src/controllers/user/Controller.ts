@@ -44,11 +44,12 @@ class ControllerTrainee {
     }
     public modify(req: Request, res: Response, next) {
         try {
-            const { dataToUpdate } = req.body;
+            const { dataToUpdate , id} = req.body;
             const data = {
+                Id: id,
                 updatedData: dataToUpdate,
             };
-            UserRepository.userUpdate(dataToUpdate).then(() => {
+            UserRepository.userUpdate(dataToUpdate, id).then(() => {
                 res.status(201).send(
                     successHandler('Given data is updated', data, 200),
                 );

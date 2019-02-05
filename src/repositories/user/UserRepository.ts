@@ -17,8 +17,8 @@ class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IU
     public userDelete(data) {
         return this.genericDelete(data);
     }
-    public userUpdate(data) {
-        return this.genericUpdate(data);
+    public userUpdate(data, id ) {
+        return this.genericUpdate(data, id);
     }
     public userFind(data) {
         return this.genericFind(data);

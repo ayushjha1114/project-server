@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { traineeRouter } from './controllers/trainee';
-import { userRouter } from './controllers/user';
+import { tokenRouter, userRouter } from './controllers/user';
 const router = express.Router();
 
 router.use('/trainee', traineeRouter);
@@ -9,4 +9,5 @@ router.use('/trainee', traineeRouter);
 //     res.send("welcome trainee");
 // });
 router.use('/user', userRouter);
+router.use('/token', tokenRouter);
 export default router;
