@@ -3,24 +3,25 @@ import VersionableRepository from '../versionable/VersionableRepository';
 import { IUserModel } from './IUserModel';
 import { userModel } from './UserModel';
 
-const versionableRepository = new VersionableRepository(userModel);
 class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
-
-   public userCount(){
-        return versionableRepository.genericCount();
+    constructor() {
+        super(userModel);
+    }
+   public userCount() {
+        return this.genericCount();
     }
     public userCreate(data) {
         console.log('inside user repo');
-        return versionableRepository.genericCreate(data);
+        return this.genericCreate(data);
     }
     public userDelete(data) {
-        return versionableRepository.genericDelete(data);
+        return this.genericDelete(data);
     }
     public userUpdate(data) {
-        return versionableRepository.genericUpdate(data);
+        return this.genericUpdate(data);
     }
     public userFind(data) {
-        return versionableRepository.genericFind(data);
+        return this.genericFind(data);
     }
 }
 

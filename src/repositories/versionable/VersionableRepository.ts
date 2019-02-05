@@ -7,8 +7,8 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         return String(mongoose.Types.ObjectId());
     }
     private model: M;
-    constructor(model) {
-        this.model = model;
+    constructor(Model) {
+        this.model = Model;
     }
 
     public genericCount(): mongoose.Query<number> {

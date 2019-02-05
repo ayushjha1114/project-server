@@ -3,9 +3,8 @@ import * as mongoose from 'mongoose';
 class VersionSchema extends mongoose.Schema {
     constructor(collectedSchema, option) {
         const versionSchema = Object.assign({
-            collectedSchema,
             createdAt: {
-                default: Date.now,
+                default: Date.now(),
                 required: true,
                 type: Date,
             },
@@ -21,7 +20,7 @@ class VersionSchema extends mongoose.Schema {
                 required: false,
                 type: String,
             },
-        });
+        }, collectedSchema);
         super(versionSchema, option);
     }
 }

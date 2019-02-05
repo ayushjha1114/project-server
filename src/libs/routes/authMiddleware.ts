@@ -21,8 +21,10 @@ export default function authMiddleware(module, permissionType) {
         }
         // req.body.data = decoded;
         const { role } = decoded;
-        console.log('DECODE:::::', decoded.email);
-        UserRepository.userFind({email: decoded.email}).then((decodedUser) => {
+        console.log(decoded);
+        console.log('DECODE:::::', decoded.id);
+        UserRepository.userFind({ _id: decoded.id }).then((decodedUser) => {
+            console.log('%%%%%%%%%%%', decodedUser);
             if (!decoded) {
                 next({
                     error: 'Unauthorized access',
@@ -39,8 +41,8 @@ export default function authMiddleware(module, permissionType) {
                 });
             }
             else {
-                req.body = decodedUser.email;
-                console.log('1234567', req.body);
+                req.body.data = decodedUser._id;
+                console.log('1234567', req.body.data);
                 next();
             }
         })

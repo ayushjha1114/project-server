@@ -5,9 +5,9 @@ class ControllerTrainee {
     // private constructor(){};
     public get(req: Request, res: Response) {
         try {
-            UserRepository.userFind({email: req.body}).then((fetched) => {
+            UserRepository.userFind({ _id: req.body.data }).then((fetched) => {
                 const { name, role, email, _id } = fetched;
-                console.log('123456789345678', name, role, email);
+                console.log('1????????????????????????????', name, role, email);
                 const data = {
                     Email: email,
                     ID: _id,
@@ -15,8 +15,10 @@ class ControllerTrainee {
                     Role: role,
                 };
                 console.log('user');
-                res.status(200).send(successHandler("It's get request", data, 200));
-                });
+                res.status(200).send(
+                    successHandler("It's get request", data, 200),
+                );
+            });
         } catch (err) {
             console.log(err);
             throw err;
@@ -30,15 +32,15 @@ class ControllerTrainee {
                 Email: email,
                 Name: name,
             };
-            UserRepository.userCreate(req.body)
-            .then(() => {
-                res.status(201).send(successHandler("It's post request", data, 201));
+            UserRepository.userCreate(req.body).then(() => {
+                res.status(201).send(
+                    successHandler("It's post request", data, 201),
+                );
             });
         } catch (err) {
             console.log(err);
             throw err;
         }
-
     }
     public modify(req: Request, res: Response, next) {
         try {
@@ -46,24 +48,25 @@ class ControllerTrainee {
             const data = {
                 updatedData: dataToUpdate,
             };
-            UserRepository.userUpdate(dataToUpdate)
-            .then(() => {
-                res.status(201).send(successHandler('Given data is updated', data, 200));
+            UserRepository.userUpdate(dataToUpdate).then(() => {
+                res.status(201).send(
+                    successHandler('Given data is updated', data, 200),
+                );
             });
         } catch (err) {
             console.log(err);
             throw err;
         }
-
     }
     public delete(req: Request, res: Response, next) {
         try {
             const { id } = req.params;
             console.log('in controller delete');
-            UserRepository.userDelete(req.params)
-                .then(() => {
-                res.status(202).send(successHandler('Data is deleted', id, 202));
-                });
+            UserRepository.userDelete(req.params).then(() => {
+                res.status(202).send(
+                    successHandler('Data is deleted', id, 202),
+                );
+            });
         } catch (err) {
             console.log(err);
             throw err;

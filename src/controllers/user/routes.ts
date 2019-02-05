@@ -8,7 +8,7 @@ const userRouter = express.Router();
 userRouter
     .get('/', authMiddleware('user', 'read'), validateHandler(validConfigData.get), ControllerTrainee.get)
     .post('/', validateHandler(validConfigData.create), ControllerTrainee.create)
-    .put('/', authMiddleware('user', 'read'), validateHandler(validConfigData.update), ControllerTrainee.modify)
+    .put('/', validateHandler(validConfigData.update), ControllerTrainee.modify)
     .delete('/:id', authMiddleware('user', 'read'), validateHandler(validConfigData.delete), ControllerTrainee.delete);
 
     // userRouter.get('/dsj', (req, res) => {
