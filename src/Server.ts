@@ -31,19 +31,26 @@ class Server {
         app.use(notFoundRoute);
         app.use(errorHandler);
     }
-    public run() {
+    public async run() {
         const { app, config: { port, mongoUrl } } = this;
-        Database.open(mongoUrl)
-            .then((value) => {
-                console.log(value);
-                app.listen(port, (err) => {
-                    if (err) { throw err; }
-                    console.log(`App is running ${port}`);
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+        const value = await Database.open(mongoUrl);
+        console.log(value);
+        app.listen(port, (err) => {
+                        if (err) { throw err; }
+                        console.log(`App is running ${port}`);
+                });
+
+        //   Database.open(mongoUrl)
+        //     .then((value) => {
+        //         console.log(value);
+        //         app.listen(port, (err) => {
+        //             if (err) { throw err; }
+        //             console.log(`App is running ${port}`);
+        //     });
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        // });
     }
 }
 export default Server;

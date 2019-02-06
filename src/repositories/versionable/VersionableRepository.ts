@@ -18,14 +18,24 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         return this.model.create({...data, originalID: id, _id: id});
     }
     public genericDelete(data) {
+        console.log('qwerty', data);
         return this.model.deleteOne(data, (err) => {
             if (err) {
                 return err;
             }
         });
     }
-    public genericUpdate(data, id): mongoose.Query<D> {
-        return this.model.updateOne({ _id: id }, { $set: data }, (err) => {
+    public async genericUpdate(data, previousId) {
+        this.model.updateOne({ _id: previousId }, {deleteAt: Date.now()} , (err) => {
+            if (err) {
+                return err;
+            }
+        });
+        const newId = VersionableRepository.generate();
+        // const fetch = await this.model.findById({_id: previousId});
+        // console.log('#########', fetch);
+        return this.model.create({...data, originalID: previousId, _id: newId });
+        return this.model.updateOne({ _id: newId },  data , (err) => {
             if (err) {
                 return err;
             }

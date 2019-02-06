@@ -8,39 +8,31 @@ import validConfigData from './validate';
 
 const tokenRouter = express.Router();
 
-tokenRouter.post('/', validateHandler(validConfigData.create), (req, res, next) => {
+tokenRouter.post('/', validateHandler(validConfigData.create), async (req, res, next) => {
     console.log('trainee');
     try {
-        const { email, userPassword } = req.body;
+        const { email } = req.body;
         console.log('request body', req.body);
         const data = {
             Email: email,
-            Password: userPassword,
+            Password: req.body.password,
         };
-        UserRepository.userFind({ email: req.body.email }).then((fetched) => {
-            console.log('FETCHED:::::::::::::', fetched.password, userPassword);
-            const { key } = config;
-            const { password } = fetched;
-            if (!fetched) {
+        const fetched =  await UserRepository.userFind({ email: req.body.email });
+        console.log('FETCHED:::::::::::::', fetched.password, req.body.password);
+        const { key } = config;
+        const { password } = fetched;
+        if (!fetched) {
                 next({
                     error: 'INVALID EMAIL ',
                     message: 'email is wrong',
                     status: 500,
                 });
             }
-            // bcrypt.compare(pass, password, (err, result) => {
-            //     if (err) {
-            //         console.log(err);
-            //     }
-            //     else {
-            //     console.log('token!!!!!!!!!!!!', result);
-            //     }
-            // });
-            if (bcrypt.compareSync(userPassword, password)) {
+        if (bcrypt.compareSync(req.body.password, password)) {
                 console.log('inside compare');
                 const token = jwt.sign({
                     fetched,
-                  }, 'secret', { expiresIn: 15 * 60 });
+                  }, key , { expiresIn: 15 * 60 });
                 console.log(token);
                 res.status(201).send(
                     successHandler("It's post request with token", token, 201),
@@ -53,7 +45,6 @@ tokenRouter.post('/', validateHandler(validConfigData.create), (req, res, next) 
                     status: 500,
                 });
             }
-        });
     } catch (err) {
         console.log(err);
         next({

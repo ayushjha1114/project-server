@@ -7,7 +7,7 @@ const validateConfig = {
             required: true,
             string: true,
         },
-        userPassword: {
+        password: {
             errorMessage: 'password is required',
             in: ['body'],
             regex: /^[a-zA-Z0-9]*$/,

@@ -8,20 +8,20 @@ class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IU
         super(userModel);
     }
    public userCount() {
-        return this.genericCount();
+        return super.genericCount();
     }
     public userCreate(data) {
         console.log('inside user repo');
-        return this.genericCreate(data);
+        return super.genericCreate(data);
     }
     public userDelete(data) {
-        return this.genericDelete(data);
+        return super.genericDelete(data);
     }
     public userUpdate(data, id ) {
-        return this.genericUpdate(data, id);
+        return super.genericUpdate(data, id);
     }
     public userFind(data) {
-        return this.genericFind(data);
+        return super.genericFind(data);
     }
 }
 

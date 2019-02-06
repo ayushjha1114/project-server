@@ -5,25 +5,17 @@ import UserRepository from '../../repositories/user/UserRepository';
 import hasPermission from './hasPermissions';
 
 export default function authMiddleware(module, permissionType) {
-    return (req, res, next) => {
-        const token = req.headers.authorization;
-        const { key } = config;
-        let decoded;
-        console.log(token);
+    return async (req, res, next) => {
         try {
+            const token = req.headers.authorization;
+            const { key } = config;
+            let decoded;
+            console.log(token);
             decoded = jwt.verify(token, key);
-        } catch (error) {
-            return next({
-                error: error.message,
-                message: error.message,
-                status: 500,
-            });
-        }
-        // req.body.data = decoded;
-        const { role } = decoded;
-        console.log(decoded);
-        console.log('DECODE:::::', decoded.id);
-        UserRepository.userFind({ _id: decoded.id }).then((decodedUser) => {
+            const { role } = decoded;
+            console.log('^^^^^^^^^^^', decoded);
+            console.log('DECODE:::::', decoded.id);
+            const decodedUser = await UserRepository.userFind({ _id: decoded.id });
             console.log('%%%%%%%%%%%', decodedUser);
             if (!decoded) {
                 next({
@@ -45,12 +37,12 @@ export default function authMiddleware(module, permissionType) {
                 console.log('1234567', req.body.data);
                 next();
             }
-        })
-        .catch((err) => {
-            next({
-                error: err,
+        } catch (error) {
+            return next({
+                error: error.message,
+                message: error.message,
+                status: 500,
             });
-        });
-
+        }
     };
 }
