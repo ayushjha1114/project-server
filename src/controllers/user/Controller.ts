@@ -5,14 +5,17 @@ class ControllerTrainee {
     // private constructor(){};
     public async get(req: Request, res: Response, next) {
         try {
-            const fetched = await UserRepository.userFind({ _id: req.body.data });
-            const { name, role, email, _id } = fetched;
-            console.log('1????????????????????????????', name, role, email);
+            console.log('Query is', req.query);
+            const { skip, limit } = req.query;
+            // const a = (req.query).toJSON;
+            console.log('skip..>>>>>>>>>>>>>>>>>', typeof skip, typeof limit);
+            const page =  await UserRepository.userCount();
+            console.log(page);
+            const fetched = await UserRepository.userFindAll({role: 'trainee'}, skip, limit);
+            console.log('1????????????????????????????', fetched);
             const data = {
-                    Email: email,
-                    ID: _id,
-                    Name: name,
-                    Role: role,
+                    documents: fetched,
+                    totalNumberOfDocs: page,
                 };
             console.log('user');
             res.status(200).send(
@@ -27,12 +30,10 @@ class ControllerTrainee {
     }
     public async create(req: Request, res: Response, next) {
         try {
-            const { name, email } = req.body;
+            const { password, email } = req.body;
             console.log('request body', req.body);
-            const data = {
-                Email: email,
-                Name: name,
-            };
+            const data = req.body;
+
             const result = await UserRepository.userCreate(req.body);
             res.status(201).send(
                     successHandler("It's post request", data, 201),

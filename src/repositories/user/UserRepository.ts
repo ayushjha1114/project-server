@@ -12,7 +12,8 @@ class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IU
     }
     public userCreate(data) {
         console.log('inside user repo');
-        return super.genericCreate(data);
+
+        return super.genericCreate(data, true);
     }
     public userDelete(data) {
         return super.genericDelete(data);
@@ -20,8 +21,12 @@ class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IU
     public userUpdate(data, id ) {
         return super.genericUpdate(data, id);
     }
-    public userFind(data) {
-        return super.genericFind(data);
+    public userFindOne(data) {
+        return super.genericFindOne(data);
+    }
+    public userFindAll(data, skip, limit) {
+        console.log("############### inside userrepo", data);
+        return super.genericFindAll(data, skip, limit);
     }
 }
 

@@ -15,7 +15,7 @@ export default function authMiddleware(module, permissionType) {
             const { role } = decoded;
             console.log('^^^^^^^^^^^', decoded);
             console.log('DECODE:::::', decoded.id);
-            const decodedUser = await UserRepository.userFind({ _id: decoded.id });
+            const decodedUser = await UserRepository.userFindOne({ originalID: decoded.id });
             console.log('%%%%%%%%%%%', decodedUser);
             if (!decoded) {
                 next({
@@ -33,7 +33,7 @@ export default function authMiddleware(module, permissionType) {
                 });
             }
             else {
-                req.body.data = decodedUser._id;
+                req.body.data = decodedUser.originalID;
                 console.log('1234567', req.body.data);
                 next();
             }

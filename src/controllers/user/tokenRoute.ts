@@ -17,7 +17,7 @@ tokenRouter.post('/', validateHandler(validConfigData.create), async (req, res, 
             Email: email,
             Password: req.body.password,
         };
-        const fetched =  await UserRepository.userFind({ email: req.body.email });
+        const fetched =  await UserRepository.userFindOne({ email: req.body.email });
         console.log('FETCHED:::::::::::::', fetched.password, req.body.password);
         const { key } = config;
         const { password } = fetched;
