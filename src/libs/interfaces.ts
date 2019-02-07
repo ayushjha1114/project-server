@@ -9,7 +9,3 @@ export interface IPermission {
         delete: string[];
     };
 }
-export interface IUsers {
-    traineeEmail: string;
-    reviewerEmail: string;
-}

@@ -3,17 +3,18 @@ export default function hasPermission(
     moduleName: string,
     role: string,
     permissionType: string,
-): void {
-    console.log(Object.keys(permissions));
-    if (permissions.hasOwnProperty(moduleName)) {
+): boolean {
+   // console.log(Object.keys(permissions));
+   if (permissions.hasOwnProperty(moduleName)) {
         // console.log('inside module')
         if (permissions[moduleName]['all' as string].includes(role)) {
-            console.log('true');
+            return true;
         } else {
-            console.log(permissions[moduleName][permissionType].includes(role));
+            const result = permissions[moduleName][permissionType].includes(role);
+            return result;
         }
     } else {
-        console.log('false');
+        return false;
     }
 }
 // hasPermission( 'getUsers','head-trainer', 'read');
