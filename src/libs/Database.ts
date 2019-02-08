@@ -2,10 +2,10 @@ import * as mongoose from 'mongoose';
 import { seedInitial } from './seedData';
 class Database {
 
-    public static disconnect() {
+    public static disconnect(): void {
         mongoose.connection.close();
     }
-    public open(mongoUrl) {
+    public open(mongoUrl): Promise<{}> {
         return new Promise((resolve, reject) => {
             mongoose
                 .connect(

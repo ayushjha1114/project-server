@@ -7,12 +7,12 @@ export interface IUserModel extends IVersionableModel {
     role: string;
 }
 
-// "husky": {
-//     "hooks": {
-//         "pre-commit": "npm test",
-//         "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-//     }
-// },
+/* "husky": {
+    "hooks": {
+        "pre-commit": "npm test",
+        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+},
 
-// "pre-commit": "npm start",
-// "commitmsg": "commitlint -E GIT_PARAMS"
+"pre-commit": "npm start",
+"commitmsg": "commitlint -E GIT_PARAMS" */

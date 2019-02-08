@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import * as mongoose from 'mongoose';
 
 class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
-    public static generate() {
+    public static generate(): string {
         return String(mongoose.Types.ObjectId());
     }
     private model: M;
@@ -23,26 +23,27 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
             return this.model.create({...data, createdAt: Date.now(), _id: id});
         }
     }
-    public genericDelete(data) {
-        console.log('qwerty', data);
-        return this.model.deleteOne(data, (err) => {
-            if (err) {
-                return err;
-            }
-        });
+    public async genericDelete(data): Promise<any> {
+        const fetch = await this.genericFindOne({_id: data.id, deleted: {$exists: false}}).lean();
+        if (fetch !== null) {
+            return this.model.updateOne({ _id: data.id }, {deleted: true} , (err) => {
+                if (err) {
+                    throw err;
+                }
+            });
+        }
+        else {
+            // tslint:disable-next-line:no-string-throw
+            throw ('Data not Found');
+        }
     }
-    public async genericUpdate(data, previousId) {
-        console.log('DATA::::::::::::::::::::::::::::::::', data);
-        const fetch = await this.model.findOne({originalID: previousId, deleteAt: {$exists: false}}).lean();
-        // console.log('#########', fetch.toJSON());
-        console.log('#########', fetch);
-        const newData = Object.assign(fetch, data);
-        console.log('@@@@@@@@@@', newData);
+    public async genericUpdate(data, previousId): Promise<D> {
+        const fetch = await this.genericFindOne({originalID: previousId, updatedAt: {$exists: false}}).lean();
+        const newData: object = Object.assign(fetch, data);
         const result =  await this.genericCreate(newData, false);
-        console.log('$$$$$$$$$$', result);
-        this.model.updateOne({ originalID: previousId }, {deleteAt: Date.now()} , (err) => {
+        this.model.updateOne({ originalID: previousId }, {updatedAt: Date.now()} , (err) => {
             if (err) {
-                return err;
+                throw err;
             }
         });
         return result;
@@ -50,17 +51,17 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
     public genericFindOne(data): mongoose.DocumentQuery<D, D> {
         return this.model.findOne(data, (err) => {
             if (err) {
-                return err;
+                throw err;
             }
         } );
     }
-    public genericFindAll(data, value, value2) {
-        console.log(":::::::::::::::", value, value2);
-        const tempValue = Number(value);
-        const tempValue2 = Number(value2);
+    public genericFindAll(data, value, value2): mongoose.DocumentQuery<D[], D>  {
+        const tempValue: number = Number(value);
+        const tempValue2: number = Number(value2);
+        // tslint:disable-next-line:no-null-keyword
         return this.model.find(data, null, { skip: tempValue, limit: tempValue2 }, (err, result) => {
             if (err) {
-                return err;
+                throw err;
             }
         } );
     }

@@ -18,15 +18,15 @@ const validateConfig = {
                     console.log('Great!!! It is an array');
                 }
                 console.log('Array value', value);
-                // value.forEach(element => {
-                //     if (!this.regex.test(element)) {
-                //         return next({
-                //             error: "Not valid",
-                //             message: `${element} is not in format`,
-                //             status: 500
-                //         });
-                //     }
-                // });
+           /*      value.forEach(element => {
+                    if (!this.regex.test(element)) {
+                        return next({
+                            error: "Not valid",
+                            message: `${element} is not in format`,
+                            status: 500
+                        });
+                    }
+                }); */
 
                 // this.regex;
             },

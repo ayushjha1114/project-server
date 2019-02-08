@@ -11,9 +11,4 @@ userRouter
     .put('/', authMiddleware('user', 'read'), validateHandler(validConfigData.update), ControllerTrainee.modify)
     .delete('/:id', authMiddleware('user', 'read'), validateHandler(validConfigData.delete), ControllerTrainee.delete);
 
-    // userRouter.get('/dsj', (req, res) => {
-//     console.log("trainee");
-//     res.send("welcome trainee");
-// });
-
 export default userRouter;

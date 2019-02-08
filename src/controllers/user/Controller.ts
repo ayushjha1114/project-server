@@ -1,23 +1,17 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { successHandler } from '../../libs/routes';
+import { IUserModel } from '../../repositories/user/IUserModel';
 import UserRepository from './../../repositories/user/UserRepository';
 class ControllerTrainee {
-    // private constructor(){};
-    public async get(req: Request, res: Response, next) {
+    public async get(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            console.log('Query is', req.query);
-            const { skip, limit } = req.query;
-            // const a = (req.query).toJSON;
-            console.log('skip..>>>>>>>>>>>>>>>>>', typeof skip, typeof limit);
-            const page =  await UserRepository.userCount();
-            console.log(page);
-            const fetched = await UserRepository.userFindAll({role: 'trainee'}, skip, limit);
-            console.log('1????????????????????????????', fetched);
-            const data = {
+            const { skip = 0, limit = 10 } = req.query;
+            const page: number =  await UserRepository.userCount();
+            const fetched: IUserModel[] = await UserRepository.userFindAll({role: 'trainee'}, skip, limit);
+            const data: object = {
                     documents: fetched,
                     totalNumberOfDocs: page,
                 };
-            console.log('user');
             res.status(200).send(
                     successHandler("It's get request", data, 200),
                 );
@@ -28,13 +22,10 @@ class ControllerTrainee {
             });
         }
     }
-    public async create(req: Request, res: Response, next) {
+    public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const { password, email } = req.body;
-            console.log('request body', req.body);
-            const data = req.body;
-
-            const result = await UserRepository.userCreate(req.body);
+            const data: object = req.body;
+            const result: IUserModel = await UserRepository.userCreate(req.body);
             res.status(201).send(
                     successHandler("It's post request", data, 201),
                 );
@@ -46,16 +37,16 @@ class ControllerTrainee {
             });
         }
     }
-    public async modify(req: Request, res: Response, next) {
+    public async modify(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { dataToUpdate , id} = req.body;
-            const data = {
+            const data: object = {
                 Id: id,
                 updatedData: dataToUpdate,
             };
-            const result = await UserRepository.userUpdate(dataToUpdate, id);
+            await UserRepository.userUpdate(dataToUpdate, id);
             res.status(201).send(
-                    successHandler('Given data is updated', data, 200),
+                    successHandler('Given data is updated', data, 201),
                 );
         } catch (err) {
             console.log(err);
@@ -64,13 +55,12 @@ class ControllerTrainee {
             });
         }
     }
-    public async delete(req: Request, res: Response, next) {
+    public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id } = req.params;
-            console.log('in controller delete');
             const result = await UserRepository.userDelete(req.params);
-            res.status(202).send(
-                    successHandler('Data is deleted', id, 202),
+            res.status(200).send(
+                    successHandler('Data is deleted', id, 200),
                 );
         } catch (err) {
             console.log(err);

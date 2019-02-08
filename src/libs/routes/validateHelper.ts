@@ -1,4 +1,6 @@
-export default (str, value, next  ) => {
+import { NextFunction } from 'express';
+
+export default (str, value, next: NextFunction  ) => {
     if (typeof str !== value) {
          return next({
             error: 'Not valid',
