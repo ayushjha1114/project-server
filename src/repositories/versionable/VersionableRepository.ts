@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as mongoose from 'mongoose';
+import { IUserModel } from '../user/IUserModel';
 
 class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
     public static generate(): string {
@@ -13,10 +14,10 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
     public genericCount(): mongoose.Query<number> {
         return this.model.countDocuments();
     }
-    public genericCreate(data, flag): Promise<D> {
+    public genericCreate(data, flag: boolean): Promise<D> {
         const id = VersionableRepository.generate();
         if (flag === true) {
-            const hash = bcrypt.hashSync(data.password, 10);
+            const hash: string = bcrypt.hashSync(data.password, 10);
             return this.model.create({...data, originalID: id, _id: id, password: hash});
         }
         else {
@@ -37,9 +38,9 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
             throw ('Data not Found');
         }
     }
-    public async genericUpdate(data, previousId): Promise<D> {
+    public async genericUpdate(data, previousId: string): Promise<D> {
         const fetch = await this.genericFindOne({originalID: previousId, updatedAt: {$exists: false}}).lean();
-        const newData: object = Object.assign(fetch, data);
+        const newData = Object.assign(fetch, data);
         const result =  await this.genericCreate(newData, false);
         this.model.updateOne({ originalID: previousId }, {updatedAt: Date.now()} , (err) => {
             if (err) {
@@ -48,14 +49,14 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         });
         return result;
     }
-    public genericFindOne(data): mongoose.DocumentQuery<D, D> {
+    public genericFindOne(data: object): mongoose.DocumentQuery<D, D> {
         return this.model.findOne(data, (err) => {
             if (err) {
                 throw err;
             }
         } );
     }
-    public genericFindAll(data, value, value2): mongoose.DocumentQuery<D[], D>  {
+    public genericFindAll(data: object, value: string, value2: string): mongoose.DocumentQuery<D[], D>  {
         const tempValue: number = Number(value);
         const tempValue2: number = Number(value2);
         // tslint:disable-next-line:no-null-keyword
