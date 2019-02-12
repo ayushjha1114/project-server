@@ -3,6 +3,7 @@ export interface IUserModel extends IVersionableModel {
     // id: string;
     email: string;
     name: string;
+    password: string;
     role: string;
 }
 

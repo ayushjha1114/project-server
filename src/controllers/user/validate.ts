@@ -1,42 +1,38 @@
 const validateConfig = {
     create: {
-        // id: {
-        //     required: true,
-        //     string: true,
-        //     regex: /^[0-9]*$/,
-        //     in: ["body"],
-        //     errorMessage: "Id is required"
-        // },
-        name: {
-            errorMessage: 'Name is required',
+        email: {
+            errorMessage: 'email is required',
+            in: ['body'],
+            regex: /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(successive)\.tech$/,
+            required: true,
+            string: true,
+        },
+        password: {
+            errorMessage: 'password is required',
             in: ['body'],
             regex: /^[a-zA-Z0-9]*$/,
             required: true,
             string: true,
-            custom(value, next) {
-                if (Array.isArray(value)) {
-                    console.log('Great!!! It is an array');
-                }
-                console.log('Array value', value);
-                // value.forEach(element => {
-                //     if (!this.regex.test(element)) {
-                //         return next({
-                //             error: "Not valid",
-                //             message: `${element} is not in format`,
-                //             status: 500
-                //         });
-                //     }
-                // });
-
-                // this.regex;
-            },
         },
+        // name: {
+        //     errorMessage: 'Name is required',
+        //     in: ['body'],
+        //     regex: /^[a-zA-Z0-9]*$/,
+        //     required: true,
+        //     string: true,
+        //     custom(value, next) {
+        //         if (Array.isArray(value)) {
+        //             console.log('Great!!! It is an array');
+        //         }
+        //         console.log('Array value', value);
+        //     },
+        // },
     },
     delete: {
         id: {
             errorMessage: 'Id is required',
             in: ['params'],
-            required: false,
+            required: true,
             string: true,
         },
     },
@@ -61,12 +57,11 @@ const validateConfig = {
             in: ['body'],
             isObject: true,
             required: true,
-            custom(dataToUpdate) { return true; },
         },
         id: {
             errorMessage: 'Id is required',
             in: ['body'],
-            required: true,
+            required: false,
             string: true,
         },
     },

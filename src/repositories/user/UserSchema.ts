@@ -5,6 +5,7 @@ class UserSchema extends VersionSchema {
             _id: String,
             email: String,
             name: String,
+            password: String,
             role: String,
         };
         super( userSchema, options );
