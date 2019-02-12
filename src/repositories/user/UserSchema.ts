@@ -1,6 +1,5 @@
-import * as mongoose from 'mongoose';
-
-class UserSchema extends mongoose.Schema {
+import VersionSchema from '../versionable/VersionSchema';
+class UserSchema extends VersionSchema {
     constructor(options) {
         const userSchema = {
             _id: String,
@@ -8,8 +7,8 @@ class UserSchema extends mongoose.Schema {
             name: String,
             role: String,
         };
-        super(userSchema, options);
-        const ac = options.collection;
+        super( userSchema, options );
+        // const ac = options.collection; // get collection name
     }
 }
 export default UserSchema;

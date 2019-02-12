@@ -1,11 +1,11 @@
-import * as mongoose from 'mongoose';
-
-export interface IUserModel extends mongoose.Document {
+import { IVersionableModel } from './../versionable/IVersionableModel';
+export interface IUserModel extends IVersionableModel {
     // id: string;
     email: string;
     name: string;
     role: string;
 }
+
 // "husky": {
 //     "hooks": {
 //         "pre-commit": "npm test",

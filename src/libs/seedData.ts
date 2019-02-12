@@ -17,6 +17,11 @@ export const seedInitial = () => {
                 });
             }
     });
+    // UserRepository.userCreate({
+    //     email: 'ASD@successive.tech',
+    //     name: 'ASFD',
+    //     role: 'SEF',
+    // });
     // UserRepository.userDelete({
     //     name: 'ayush',
     // });
