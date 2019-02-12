@@ -8,17 +8,13 @@ class VersionSchema extends mongoose.Schema {
                 required: true,
                 type: Date,
             },
-            deleted: {
+            deletedAt: {
                 required: false,
-                type: String,
+                type: Date,
             },
             originalID: {
                 required: true,
                 type: String,
-            },
-            updatedAt: {
-                required: false,
-                type: Date,
             },
             updatedBy: {
                 required: false,

@@ -25,9 +25,9 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         }
     }
     public async genericDelete(data): Promise<any> {
-        const fetch = await this.genericFindOne({_id: data.id, deleted: {$exists: false}}).lean();
+        const fetch = await this.genericFindOne({originalID: data.id, deletedAt: {$exists: false}}).lean();
         if (fetch !== null) {
-            return this.model.updateOne({ _id: data.id }, {deleted: true} , (err) => {
+            return this.model.updateOne({ _id: data.id }, {deletedAt: Date.now()} , (err) => {
                 if (err) {
                     throw err;
                 }
@@ -39,10 +39,10 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         }
     }
     public async genericUpdate(data, previousId: string): Promise<D> {
-        const fetch = await this.genericFindOne({originalID: previousId, updatedAt: {$exists: false}}).lean();
+        const fetch = await this.genericFindOne({originalID: previousId, deletedAt: {$exists: false}}).lean();
         const newData = Object.assign(fetch, data);
         const result =  await this.genericCreate(newData, false);
-        this.model.updateOne({ originalID: previousId }, {updatedAt: Date.now()} , (err) => {
+        this.model.updateOne({ originalID: previousId }, {deletedAt: Date.now()} , (err) => {
             if (err) {
                 throw err;
             }
