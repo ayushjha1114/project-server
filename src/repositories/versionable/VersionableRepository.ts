@@ -52,6 +52,7 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
     public genericFindOne(data: object): mongoose.DocumentQuery<D, D> {
         return this.model.findOne(data, (err) => {
             if (err) {
+                console.log(err);
                 throw err;
             }
         } );

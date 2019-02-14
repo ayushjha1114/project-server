@@ -20,7 +20,8 @@ export default function authMiddleware(module, permissionType) {
                     status: 401,
                 });
             }
-            const decodedUser: IUserModel = await UserRepository.userFindOne({ originalID: decoded.id });
+            // tslint:disable-next-line:max-line-length
+            const decodedUser = await UserRepository.userFindOne({ originalID: decoded.originalID, deletedAt: {$exists: false}}).lean();
             const result: boolean = hasPermission(module, decodedUser.role, permissionType);
             if (result === false) {
                 next({
