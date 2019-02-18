@@ -14,19 +14,19 @@ const validateConfig = {
             required: true,
             string: true,
         },
-        // name: {
-        //     errorMessage: 'Name is required',
-        //     in: ['body'],
-        //     regex: /^[a-zA-Z0-9]*$/,
-        //     required: true,
-        //     string: true,
-        //     custom(value, next) {
-        //         if (Array.isArray(value)) {
-        //             console.log('Great!!! It is an array');
-        //         }
-        //         console.log('Array value', value);
-        //     },
-        // },
+      /*   name: {
+            errorMessage: 'Name is required',
+            in: ['body'],
+            regex: /^[a-zA-Z0-9]*$/,
+            required: true,
+            string: true,
+            custom(value, next) {
+                if (Array.isArray(value)) {
+                    console.log('Great!!! It is an array');
+                }
+                console.log('Array value', value);
+            },
+        }, */
     },
     delete: {
         id: {

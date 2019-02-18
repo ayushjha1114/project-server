@@ -4,6 +4,6 @@ export interface IConfig {
     mongoUrl: string;
     password: string;
 }
-// export interface IConfig {
-//     portType: string
-// }
+/* export interface IConfig {
+    portType: string
+} */

@@ -9,7 +9,6 @@ class Server {
     private app: express.Express;
     constructor(private config) {
         this.app = express();
-        console.log('hi');
     }
     public bootstrap() {
         this.initBodyParser();
@@ -32,25 +31,17 @@ class Server {
         app.use(errorHandler);
     }
     public async run() {
-        const { app, config: { port, mongoUrl } } = this;
-        const value = await Database.open(mongoUrl);
-        console.log(value);
-        app.listen(port, (err) => {
-                        if (err) { throw err; }
-                        console.log(`App is running ${port}`);
-                });
-
-        //   Database.open(mongoUrl)
-        //     .then((value) => {
-        //         console.log(value);
-        //         app.listen(port, (err) => {
-        //             if (err) { throw err; }
-        //             console.log(`App is running ${port}`);
-        //     });
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        // });
+        try {
+            const { app, config: { port, mongoUrl } } = this;
+            const value: object = await Database.open(mongoUrl);
+            app.listen(port, (err) => {
+                            if (err) { throw err; }
+                            console.log(`App is running ${port}`);
+                    });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
     }
 }
 export default Server;

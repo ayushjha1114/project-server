@@ -1,19 +1,15 @@
 // import successHandler from "./successHandler";
+import { NextFunction, Request, Response } from 'express';
 import validateHelper from './validateHelper';
-export default (objData) => (req, res, next) => {
-    console.log('validate handler', req.body, req.params, req.query);
+
+export default (objData) => (req: Request, res: Response, next: NextFunction) => {
     const keys = Object.keys(objData);
-    // console.log(Object.keys(objData));
     keys.forEach((key) => {
         const item = objData[key];
-        // console.log("asdasdasdtrue adnawidjnawdn", item);
         const value = item.in.map((items) => {
-            console.log('asdasfd', req[items][key]);
             return req[items][key];
         });
-        console.log(' line 14', value);
         const validatedValue = value.filter((element) => element);
-        console.log(' line 16', validatedValue);
         if (item && item.required) {
             // It's used to check field is required or not
             if (validatedValue.length !== value.length) {
@@ -45,18 +41,18 @@ export default (objData) => (req, res, next) => {
         if (item.isObject) {
             validateHelper(validatedValue[0], 'object', next);
         }
-        if (item.custom) {
+       /*  if (item.custom) {
             if (req.body.name) {
                 item.custom(validatedValue[0]);
             }
-        }
+        } */
     });
     next();
 };
 
-// export default function(objData) {
-//     return function(req, res, next) {
-//         console.log("validate handler", req.body, req.params, req.query);
-//         next();
-//     };
-// }
+/* export default function(objData) {
+    return function(req, res, next) {
+        console.log("validate handler", req.body, req.params, req.query);
+        next();
+    };
+} */

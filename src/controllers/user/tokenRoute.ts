@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as express from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import config from '../../config/configuration';
 import { successHandler, validateHandler } from '../../libs/routes';
@@ -8,30 +9,27 @@ import validConfigData from './validate';
 
 const tokenRouter = express.Router();
 
-tokenRouter.post('/', validateHandler(validConfigData.create), async (req, res, next) => {
-    console.log('trainee');
-    try {
-        const { email } = req.body;
-        console.log('request body', req.body);
-        const data = {
+tokenRouter
+    .post('/', validateHandler(validConfigData.create), async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { email } = req.body;
+            const data: object = {
             Email: email,
             Password: req.body.password,
         };
-        const fetched =  await UserRepository.userFind({ email: req.body.email });
-        console.log('FETCHED:::::::::::::', fetched.password, req.body.password);
-        const { key } = config;
-        const { password } = fetched;
-        if (!fetched) {
+            const fetched =  await UserRepository.userFindOne({ email: req.body.email, deletedAt: {$exists: false} });
+            const { key } = config;
+            const { password } = fetched;
+            if (!fetched) {
                 next({
                     error: 'INVALID EMAIL ',
                     message: 'email is wrong',
                     status: 500,
                 });
             }
-        if (bcrypt.compareSync(req.body.password, password)) {
-                console.log('inside compare');
+            if (bcrypt.compareSync(req.body.password, password)) {
                 const token = jwt.sign({
-                    fetched,
+                    originalID: fetched.originalID,
                   }, key , { expiresIn: 15 * 60 });
                 console.log(token);
                 res.status(201).send(
@@ -45,13 +43,13 @@ tokenRouter.post('/', validateHandler(validConfigData.create), async (req, res, 
                     status: 500,
                 });
             }
-    } catch (err) {
-        console.log(err);
-        next({
-            error: 'unauthorized ',
-            message: err.message,
-            status: 500,
-        });
-    }
+        } catch (err) {
+                console.log(err);
+                next({
+                    error: 'unauthorized ',
+                    message: err.message,
+                    status: 500,
+                });
+        }
 });
 export default tokenRouter;
