@@ -6,7 +6,10 @@ class UserSchema extends VersionSchema {
             email: String,
             name: String,
             password: String,
-            role: String,
+            role: {
+                required: true,
+                type: String,
+            },
         };
         super( userSchema, options );
         // const ac = options.collection; // get collection name
