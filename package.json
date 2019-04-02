@@ -1,0 +1,47 @@
+{
+    "name": "express-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "babel-node extra --presets env",
+        "prestart": "npm run clean",
+        "start": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
+        "clean": "rm -r -f dist",
+        "nodemon": "nodemon ./dist/index.js",
+        "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
+        "lint:fix": "yarn lint -- --fix",
+        "precommit": "npm run lint",
+        "prepush": "npm run lint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ayushj117/express-server.git"
+    },
+    "author": "Ayush Jha",
+    "bugs": {
+        "url": "https://github.com/ayushj117/express-server/issues"
+    },
+    "homepage": "https://github.com/ayushj117/express-server#readme",
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "tsc-watch": "^1.0.31",
+        "typescript": "^3.2.4"
+    },
+    "dependencies": {
+        "@types/bcrypt": "^3.0.0",
+        "@types/express": "^4.16.0",
+        "@types/mongoose": "^5.3.10",
+        "@types/node": "^10.12.18",
+        "bcrypt": "^3.0.3",
+        "body-parser": "^1.18.3",
+        "dotenv": "^6.2.0",
+        "express": "^4.16.4",
+        "husky": "^1.3.1",
+        "jsonwebtoken": "^8.4.0",
+        "mongoose": "^5.4.7",
+        "nodemon": "^1.18.9",
+        "tslint": "^5.12.1"
+    }
+}
