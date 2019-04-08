@@ -3,6 +3,7 @@ class UserSchema extends VersionSchema {
     constructor(options) {
         const userSchema = {
             _id: String,
+            complaint: String,
             email: String,
             name: String,
             password: String,
@@ -10,6 +11,8 @@ class UserSchema extends VersionSchema {
                 required: true,
                 type: String,
             },
+            wasteQuantity: String,
+            wasteType: String,
         };
         super( userSchema, options );
         // const ac = options.collection; // get collection name

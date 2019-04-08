@@ -7,7 +7,7 @@ class ControllerTrainee {
         try {
             const { skip = 0, limit = 10 } = req.query;
             const page: number =  await UserRepository.userCount();
-            const fetched: IUserModel[] = await UserRepository.userFindAll({role: 'trainee'}, skip, limit);
+            const fetched: IUserModel[] = await UserRepository.userFindAll({role: 'user'}, skip, limit);
             const data: object = {
                     documents: fetched,
                     totalNumberOfDocs: page,

@@ -3,7 +3,7 @@ const validateConfig = {
         email: {
             errorMessage: 'email is required',
             in: ['body'],
-            regex: /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(successive)\.tech$/,
+            regex: /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(rkgit)\.edu$/,
             required: true,
             string: true,
         },

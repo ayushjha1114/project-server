@@ -32,7 +32,7 @@ export default (objData) => (req: Request, res: Response, next: NextFunction) =>
             // It's check the regular expression of key-value pairs
             if (!item.regex.test(validatedValue[0])) {
                 next({
-                    error: 'Not valid',
+                    error: 'Not VALID',
                     message: `${key} is not in format`,
                     status: 404,
                 });

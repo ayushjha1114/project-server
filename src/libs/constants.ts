@@ -1,31 +1,31 @@
 import { IPermission } from './interfaces';
 // tslint:disable-next-line:one-variable-per-declaration
-const head: string = 'head-trainer',
- trainee: string = 'trainee',
-  trainer: string = 'trainer';
+const head: string = 'admin',
+ user: string = 'user',
+  employee: string = 'employee';
 const permissions: IPermission = {
 
     GetUsers1234: {
-        all: [head, trainee],
+        all: [head, user],
         delete: [],
-        read: [trainee, trainer],
-        write: [trainer],
+        read: [user, employee],
+        write: [employee],
 
     },
     ask123: {
-        all: [head, trainee],
+        all: [head, user],
         delete: [],
-        read: [trainee, trainer],
-        write: [trainer],
+        read: [user, employee],
+        write: [employee],
 
     },
-    user: {
+    users: {
         all: [head],
         delete: [],
-        read: [trainee, trainer],
-        write: [trainer],
+        read: [user, employee],
+        write: [employee],
 
     },
 };
 
-export { permissions, head, trainee, trainer };
+export { permissions, head, user, employee };

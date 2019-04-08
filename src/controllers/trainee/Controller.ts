@@ -4,10 +4,10 @@ class ControllerTrainee {
     public get(req: Request, res: Response): void {
         const data: object = [
             {
-                name: 'trainee1',
+                name: 'user1',
             },
             {
-                name: 'trainee2',
+                name: 'user2',
             },
         ];
         res.status(200).send(successHandler("It's get request", data, 200));
