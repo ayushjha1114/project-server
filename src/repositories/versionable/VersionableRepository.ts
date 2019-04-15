@@ -14,6 +14,11 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
     public genericCount(): mongoose.Query<number> {
         return this.model.countDocuments();
     }
+
+    public genericOrderCount(data): mongoose.Query<number> {
+        return this.model.countDocuments(data);
+    }
+
     public genericCreate(data, flag: boolean): Promise<D> {
         const id = VersionableRepository.generate();
         if (flag === true) {
@@ -39,8 +44,13 @@ class VersionableRepository<D extends mongoose.Document, M extends mongoose.Mode
         }
     }
     public async genericUpdate(data, previousId: string): Promise<D> {
+        let newData = {};
         const fetch = await this.genericFindOne({originalID: previousId, deletedAt: {$exists: false}}).lean();
-        const newData = Object.assign(fetch, data);
+        if (data.hasOwnProperty('approved')) {
+            newData = Object.assign(fetch, data);
+        } else {
+            newData = Object.assign(fetch, data, {approved: false});
+        }
         const result =  await this.genericCreate(newData, false);
         this.model.updateOne({ originalID: previousId }, {deletedAt: Date.now()} , (err) => {
             if (err) {

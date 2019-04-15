@@ -10,6 +10,9 @@ class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IU
    public userCount(): mongoose.Query<number> {
         return super.genericCount();
     }
+    public userOrderCount(data): mongoose.Query<number> {
+        return super.genericOrderCount(data);
+    }
     public userCreate(data): Promise<IUserModel> {
         return super.genericCreate(data, true);
     }

@@ -1,10 +1,17 @@
 import { IVersionableModel } from './../versionable/IVersionableModel';
 export interface IUserModel extends IVersionableModel {
     // id: string;
+    approved: boolean;
     email: string;
     name: string;
     password: string;
     role: string;
+    complaint: string;
+    city: string;
+    address: string;
+    zip: string;
+    metal: number;
+    plastic: number;
 }
 
 /* "husky": {
