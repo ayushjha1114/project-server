@@ -7,20 +7,26 @@ export const seedInitial = async (): Promise<void> => {
         const { password } = config;
         const saltRounds: number = 10;
         const plainPassword: string = password;
-        const hash = bcrypt.hashSync(plainPassword, saltRounds);
+        // const hash = bcrypt.hashSync(plainPassword, saltRounds);
         const result: number =  await UserRepository.userCount();
         if ( result === 0 ) {
             UserRepository.userCreate({
-                email: 'head.trainer@successive.tech',
-                name: 'Head-Trainer',
-                password: hash,
-                role: 'head-trainer',
+                email: 'ayush.jha@rkgit.edu',
+                name: 'Ayush-Jha',
+                password: plainPassword,
+                role: 'admin',
             });
             UserRepository.userCreate({
-                email: 'trainee@successive.tech',
-                name: 'Trainee',
-                password: hash,
-                role: 'trainee',
+                email: 'aviral.bajpai@rkgit.edu',
+                name: 'Aviral',
+                password: plainPassword,
+                role: 'employee',
+            });
+            UserRepository.userCreate({
+                email: 'aman.chaurasia@rkgit.edu',
+                name: 'Aman',
+                password: plainPassword,
+                role: 'user',
             });
         }
     } catch (e) {

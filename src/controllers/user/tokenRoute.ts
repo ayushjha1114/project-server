@@ -20,6 +20,7 @@ tokenRouter
             const fetched =  await UserRepository.userFindOne({ email: req.body.email, deletedAt: {$exists: false} });
             const { key } = config;
             const { password } = fetched;
+            console.log(fetched.password, req.body.password);
             if (!fetched) {
                 next({
                     error: 'INVALID EMAIL ',
