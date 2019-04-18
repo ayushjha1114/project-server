@@ -20,12 +20,6 @@ export const seedInitial = async (): Promise<void> => {
                 email: 'aviral.bajpai@rkgit.edu',
                 name: 'Aviral',
                 password: plainPassword,
-                role: 'employee',
-            });
-            UserRepository.userCreate({
-                email: 'aman.chaurasia@rkgit.edu',
-                name: 'Aman',
-                password: plainPassword,
                 role: 'user',
             });
         }
