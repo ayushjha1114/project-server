@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import * as express from 'express';
 import Database from './libs/Database';
 import { errorHandler, notFoundRoute } from './libs/routes';
@@ -26,6 +27,7 @@ class Server {
             res.send('hi welcome');
         });
         // app.get("/favicon.ico", (req, res) => res.status(204));
+        app.use(cors());
         app.use('/api', router);
         app.use(notFoundRoute);
         app.use(errorHandler);
