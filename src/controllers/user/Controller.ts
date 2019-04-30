@@ -6,7 +6,7 @@ class ControllerUser {
     public async get(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { skip = 0, limit = 10 } = req.query;
-            const page: number =  await UserRepository.userCount();
+            const page: number =  await UserRepository.userOrderCount({role: 'user'});
             const fetched: IUserModel[] = await UserRepository.userFindAll({role: 'user'}, skip, limit);
             const data: object = {
                     documents: fetched,

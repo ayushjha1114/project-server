@@ -20,7 +20,7 @@ tokenRouter
             const fetched =  await UserRepository.userFindOne({ email: req.body.email, deletedAt: {$exists: false} });
             const { key } = config;
             const { password } = fetched;
-            console.log(fetched.password, req.body.password);
+            console.log(fetched.password, req.body.password, bcrypt.compareSync(req.body.password, password));
             if (!fetched) {
                 next({
                     error: 'INVALID EMAIL ',
@@ -29,6 +29,7 @@ tokenRouter
                 });
             }
             if (bcrypt.compareSync(req.body.password, password)) {
+                console.log('fff');
                 const token = jwt.sign({
                     originalID: fetched.originalID,
                   }, key , { expiresIn: 15 * 60 });
