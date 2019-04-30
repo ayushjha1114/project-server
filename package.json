@@ -10,9 +10,7 @@
         "clean": "rm -r -f dist",
         "nodemon": "nodemon ./dist/index.js",
         "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
-        "lint:fix": "yarn lint -- --fix",
-        "precommit": "npm run lint",
-        "prepush": "npm run lint"
+        "lint:fix": "yarn lint -- --fix"
     },
     "repository": {
         "type": "git",
