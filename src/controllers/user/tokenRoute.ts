@@ -32,7 +32,7 @@ tokenRouter
                 console.log('fff');
                 const token = jwt.sign({
                     originalID: fetched.originalID,
-                  }, key , { expiresIn: 15 * 60 });
+                  }, key , { expiresIn: 60 * 60 });
                 console.log(token);
                 res.status(201).send(
                     successHandler("It's post request with token", token, 201),

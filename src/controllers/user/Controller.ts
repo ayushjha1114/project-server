@@ -25,10 +25,20 @@ class ControllerUser {
     public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const data: object = req.body;
-            const result: IUserModel = await UserRepository.userCreate(req.body);
-            res.status(201).send(
-                    successHandler("It's post request", data, 201),
-                );
+            const fetched: IUserModel = await UserRepository.userFindOne({email: req.body.email});
+            if (!fetched) {
+                const result: IUserModel = await UserRepository.userCreate(req.body);
+                res.status(201).send(
+                        successHandler("It's post request", data, 201),
+                    );
+            } else {
+                next({
+                    error : 'email already exist',
+                    message: 'error occurred',
+                    status: 404,
+                });
+            }
+
         } catch (err) {
             console.log(err);
             next({
